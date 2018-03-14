@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/cardViewReviews"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_margin="4dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp">
+
+
+        <TextView
+            android:id="@+id/textViewAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_16sp"
+            android:padding="@dimen/padding_4dp"
+            android:layout_marginBottom="@dimen/margin_4dp"
+            android:layout_marginStart="@dimen/margin_4dp"
+            tools:text="Michelle Thompson"/>
+
+
+    <TextView
+        android:id="@+id/textViewContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:layout_below="@+id/textViewAuthor"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.3"
+        android:layout_marginStart="@dimen/margin_4dp"
+        android:layout_marginEnd="@dimen/margin_10dp"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:textSize="@dimen/text_16sp"
+        tools:text="Lorem Ipsum, jhjhdk skashdkjsh kjasdhjskh"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

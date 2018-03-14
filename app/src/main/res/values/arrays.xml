@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Label ordering must match values -->
+    <array name="pref_theme_option_labels">
+        <item>@string/pref_theme_label_red</item>
+        <item>@string/pref_theme_label_blue</item>
+    </array>
+
+    <array name="pref_theme_option_values">
+        <item>@string/pref_theme_red_value</item>
+        <item>@string/pref_theme_blue_value</item>
+    </array>
+</resources>

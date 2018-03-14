@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#006064</color>
+    <color name="colorAccent">#FF9049</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="black_alpha_40">#66000000</color>
+    <color name="white_alpha_40">#66ffffff</color>
+
+    <!-- colors for BlueTheme -->
+    <color name="themeBluePrimary">#795548</color>
+    <color name="themeBluePrimaryDark">#4E342E</color>
+    <color name="themeBlueAccent">#49FFBF</color>
+
+    <!--colors for side -nav-bar ShroomHazeTheme -->
+    <color name="startColorRed">#5C258D</color>
+    <color name="endColorRed">#4389A2</color>
+
+    <!-- colors for side-nav-bar BlueTheme -->
+
+    <color name="startColorBlue">#00F260</color>
+    <color name="endColorBlue">#0575E6</color>
+
+
+</resources>

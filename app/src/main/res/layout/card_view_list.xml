@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/margin_2dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/movie_ImageView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_300dp"
+        android:src="@drawable/placeholder"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/poster_description"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_4dp"
+        android:layout_alignBottom="@+id/movie_ImageView"
+        tools:text="6.4"
+        android:textSize="@dimen/text_22sp"
+        android:textColor="@color/white"
+        android:background="@drawable/text_border"
+        android:layout_marginBottom="@dimen/margin_2dp"
+        android:drawableStart="@drawable/star"
+        android:drawablePadding="@dimen/padding_4dp"/>
+    </RelativeLayout>
+
