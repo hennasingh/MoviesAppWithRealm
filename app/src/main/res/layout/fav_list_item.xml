@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/margin_2dp"
+    android:padding="@dimen/margin_2dp">
+
+  <android.support.constraint.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+      android:layout_margin="@dimen/margin_2dp">
+
+      <ImageView
+          android:id="@+id/imageViewPoster"
+          android:layout_width="150dp"
+          android:layout_height="match_parent"
+          android:padding="@dimen/padding_4dp"
+          android:layout_margin="@dimen/margin_4dp"
+          android:src="@drawable/poster"
+          android:scaleType="fitXY"/>
+
+      <TextView
+          android:id="@+id/textViewTitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="Beauty and the Beast"
+          app:layout_constraintLeft_toRightOf="@id/imageViewPoster"
+          app:layout_constraintTop_toTopOf="parent"
+          android:textSize="@dimen/text_18sp"
+          android:layout_marginTop="@dimen/margin_10dp"
+          android:layout_marginStart="@dimen/margin_8dp"
+          />
+      <TextView
+          android:id="@+id/textViewRating"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableStart="@drawable/star"
+          app:layout_constraintLeft_toRightOf="@id/imageViewPoster"
+          app:layout_constraintTop_toTopOf="@id/textViewTitle"
+          android:layout_marginTop="34dp"
+          android:layout_marginStart="@dimen/margin_6dp"
+          tools:text="8.4"
+          android:drawablePadding="@dimen/padding_4dp"
+          android:textSize="@dimen/text_18sp"/>
+
+      <TextView
+          android:id="@+id/textViewDate"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableStart="@drawable/ic_date"
+          app:layout_constraintLeft_toRightOf="@id/textViewRating"
+          app:layout_constraintTop_toTopOf="@id/textViewTitle"
+          android:layout_marginTop="34dp"
+          android:layout_marginStart="@dimen/margin_16dp"
+          tools:text="March 24"
+          android:drawablePadding="@dimen/padding_4dp"
+          android:textSize="@dimen/text_18sp"/>
+
+      <TextView
+          android:id="@+id/textViewOverview"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintStart_toEndOf="@id/imageViewPoster"
+          app:layout_constraintTop_toBottomOf="@id/textViewDate"
+          android:layout_marginTop="@dimen/margin_10dp"
+          android:layout_marginStart="@dimen/margin_8dp"
+          android:lineSpacingMultiplier="1.3"
+          android:textSize="@dimen/text_16sp"
+          android:padding="@dimen/padding_2dp"
+          android:layout_marginEnd="@dimen/margin_10dp"
+          tools:text="Lorem Ipsum djhkjdshkj hjdshj hcsdkjhckjd hckjdshkj hdskjcjkds sbncnsdcnsdbcdbcdbcdbchdvchd"/>
+
+
+</android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>

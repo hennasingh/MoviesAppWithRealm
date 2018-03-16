@@ -12,7 +12,7 @@ public class MovieListDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME ="movies.db";
 
-    private static final int DATABASE_VERSION =1;
+    private static final int DATABASE_VERSION =2;
 
     public MovieListDbHelper(Context context){
         super(context, DATABASE_NAME,null,DATABASE_VERSION); // null -> cursor factory
@@ -28,8 +28,7 @@ public class MovieListDbHelper extends SQLiteOpenHelper {
                 MovieListContract.MovieListEntry.COLUMN_MOVIE_DATE + " TEXT," +
                 MovieListContract.MovieListEntry.COLUMN_MOVIE_RATING + " REAL," +
                 MovieListContract.MovieListEntry.COLUMN_MOVIE_PLOT + " TEXT," +
-                MovieListContract.MovieListEntry.COLUMN_MOVIE_POSTER + " TEXT," +
-                MovieListContract.MovieListEntry.COLUMN_MOVIE_BACKDROP + " TEXT" +
+                MovieListContract.MovieListEntry.COLUMN_MOVIE_POSTER + " TEXT" +
                 ")";
 
         sqLiteDatabase.execSQL(CREATE_MOVIELIST_TABLE);

@@ -15,8 +15,9 @@
     android:paddingBottom="@dimen/margin_16dp"
     android:background="@drawable/background_bar">
 
+    <include layout="@layout/appbar_toolbar"/>
 
-      <ImageView
+          <ImageView
           android:id="@+id/imageViewHeader"
           android:layout_width="0dp"
           android:layout_height="0dp"
@@ -94,7 +95,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toEndOf="@+id/textViewMovieHeading"
         app:layout_constraintTop_toBottomOf="@+id/imageViewHeader"
-        app:srcCompat="@drawable/ic_favorite"/>
+        android:onClick="onClickAddMovie"
+        app:srcCompat="@drawable/ic_favorite_border"/>
 
     <TextView
         android:id="@+id/textViewRating"

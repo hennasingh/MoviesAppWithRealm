@@ -11,6 +11,10 @@ public class Genres {
     @SerializedName("name")
     private String mGenre;
 
+    public Genres(String genreName) {
+        mGenre = genreName;
+    }
+
     public String getGenre() {
         return mGenre;
     }

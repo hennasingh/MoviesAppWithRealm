@@ -168,4 +168,5 @@ public class MoviesContentProvider extends ContentProvider {
     public int update(@NonNull Uri uri, ContentValues contentValues,  String s, String[] strings) {
         return 0;
     }
+
 }

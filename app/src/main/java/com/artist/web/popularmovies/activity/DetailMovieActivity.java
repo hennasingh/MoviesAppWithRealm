@@ -2,22 +2,22 @@ package com.artist.web.popularmovies.activity;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.artist.web.popularmovies.MainApplication;
 import com.artist.web.popularmovies.NetworkUtils;
 import com.artist.web.popularmovies.R;
 import com.artist.web.popularmovies.adapter.ReviewsAdapter;
 import com.artist.web.popularmovies.adapter.VideosAdapter;
+import com.artist.web.popularmovies.database.Favorites;
 import com.artist.web.popularmovies.database.MovieListContract;
 import com.artist.web.popularmovies.model.Genres;
 import com.artist.web.popularmovies.model.MovieDetails;
@@ -52,7 +52,11 @@ public class DetailMovieActivity extends BaseActivity {
     private List<MovieVideos> mMovieVideosList;
     private List<MovieReviews> mMovieReviewsList;
     private List <Genres> mGenres;
-    private int duration;
+    int mMovieId;
+    private ImageButton favButton;
+
+    private static final int FAV_TAG=0;
+    private static final int FAV_NOT_TAG =1;
 
     private RecyclerView mMovieTrailersRV, mMovieReviewsRV;
     private Context context = DetailMovieActivity.this;
@@ -69,6 +73,8 @@ public class DetailMovieActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
 
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -82,15 +88,19 @@ public class DetailMovieActivity extends BaseActivity {
         mImageHeader = findViewById(R.id.imageViewHeader);
         mMovieDuration = findViewById(R.id.textViewDuration);
         mMovieGenre = findViewById(R.id.movie_genre);
+        favButton = findViewById(R.id.fav_button);
+
+
 
 
         mMovie = getIntent().getParcelableExtra(PARCEL_DATA);
 
         Log.d(TAG, "data " + mMovie);
-        int mMovieId = mMovie.getId();
+         mMovieId = mMovie.getId();
         Log.d(TAG, "movie id " +mMovieId);
 
 
+        setImageButtons();
         //RV for Trailers
         mMovieTrailersRV = findViewById(R.id.recyclerView_trailers);
         RecyclerView.LayoutManager trailerLayout = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
@@ -104,6 +114,16 @@ public class DetailMovieActivity extends BaseActivity {
          makeNetworkRequest(mMovieId);
 
          displayMovieDetails();
+    }
+
+    private void setImageButtons() {
+        if (Favorites.isMovieFavorite(context, mMovieId)) {
+            favButton.setTag(FAV_TAG);
+            favButton.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            favButton.setTag(FAV_NOT_TAG);
+            favButton.setImageResource(R.drawable.ic_favorite_border);
+        }
     }
 
     private void makeNetworkRequest(int MovieId) {
@@ -121,10 +141,23 @@ public class DetailMovieActivity extends BaseActivity {
                                 Log.d(TAG, "response " +mMovieDetails);
                                 Log.d(TAG, "response body " +response.body());
 
-                                duration = response.body().getRuntime();
+                                //setting duration
+                                mMovieDuration.setText(String.valueOf(mMovieDetails.getRuntime()));
 
                                 //getting genres
-                               mGenres = response.body().getGenres();
+                                mGenres =mMovieDetails.getGenres();
+                                String genres="";
+                                if(mGenres!=null) {
+                                    for (int i = 0; i < mGenres.size(); i++) {
+                                        if (mGenres.get(i) == null) continue;
+                                        if (i == mGenres.size() - 1) {
+                                            genres = genres.concat(mGenres.get(i).getGenre());
+                                        } else {
+                                            genres = genres.concat(mGenres.get(i).getGenre() + ", ");
+                                        }
+                                    }
+                                }
+                                mMovieGenre.setText(genres);
 
                                 //getting and setting Videos
                                 MovieIdVideos movieIdVideos = mMovieDetails.getMovieIdVideos();
@@ -164,22 +197,6 @@ public class DetailMovieActivity extends BaseActivity {
         mMovieRating.setText(String.valueOf(mMovie.getVoteAverage()));
         mMovieDate.setText(mMovie.getReleaseDate());
         mOverview.setText(mMovie.getOverView());
-       mMovieDuration.setText(String.valueOf(duration));
-
-        String genres= "";
-        if(mGenres!=null) {
-
-            for (int i = 0; i < mGenres.size(); i++) {
-                if (i == mGenres.size() - 1) {
-                    genres = genres.concat(mGenres.get(i).getGenre());
-                } else {
-
-                    genres = genres.concat(mGenres.get(i).getGenre() + " ,");
-                }
-            }
-        }
-            mMovieGenre.setText(genres);
-
 
         Picasso.with(this)
                 .load(mMovie.getBackdropPath())
@@ -192,16 +209,30 @@ public class DetailMovieActivity extends BaseActivity {
 
     public void onClickAddMovie(View view) {
 
-        ContentValues values = new ContentValues();
+        if((int)view.getTag()==FAV_TAG){
+            Favorites.removeMovieFromFavorite(context,mMovieId);
+            favButton.setTag(FAV_NOT_TAG);
+            favButton.setImageResource(R.drawable.ic_favorite_border);
+        }else{
+            ContentValues values = new ContentValues();
 
-        values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_NAME, mMovie.getOriginalTitle());
-        values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_PLOT, mMovie.getOverView());
-
-        Uri uri = getContentResolver().insert(MovieListContract.MovieListEntry.CONTENT_URI, values);
-
-        if(uri!=null){
-            Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+            values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_ID,mMovie.getId());
+            values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_NAME, mMovie.getOriginalTitle());
+            values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_PLOT, mMovie.getOverView());
+            values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_RATING, mMovie.getVoteAverage());
+            values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_DATE, mMovie.getReleaseDate());
+            values.put(MovieListContract.MovieListEntry.COLUMN_MOVIE_POSTER,mMovie.getPosterPath());
+            Favorites.addMovieAsFavorite(values,context);
+            favButton.setTag(FAV_TAG);
+            favButton.setImageResource(R.drawable.ic_favorite_filled);
         }
+
     }
 
- }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        onBackPressed();
+        return true;
+    }
+}

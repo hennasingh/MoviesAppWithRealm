@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.artist.web.popularmovies.R;
 import com.artist.web.popularmovies.model.Movies;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,47 +19,96 @@ import java.util.List;
  * Created by User on 19-Feb-18.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Movies> movies;
     private final Context context;
+   private boolean FLAG_IS_FAV;
 
     private final MovieAdapterOnClickListener mMovieAdapterOnClickListener;
+
+    private final int ALL =0;
+    private final int FAV =1;
 
 
     public interface MovieAdapterOnClickListener{
         void onItemClick(int clickedPosition);
     }
 
-    public MovieAdapter(List<Movies> movies, MovieAdapterOnClickListener listener, Context context){
+    public MovieAdapter(List<Movies> movies, MovieAdapterOnClickListener listener, Context context,boolean isFav){
         this.movies = movies;
         mMovieAdapterOnClickListener = listener;
         this.context = context;
+        FLAG_IS_FAV = isFav;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        if (FLAG_IS_FAV){
+            return FAV;
+        }else
+            return ALL;
     }
 
 
     @Override
-    public MovieAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext())
-                           .inflate(R.layout.card_view_list,parent,false);
-        layoutView.setFocusable(true);
-        return new MovieAdapterViewHolder(layoutView, mMovieAdapterOnClickListener);
-    }
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        RecyclerView.ViewHolder viewHolder= null;
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+
+        switch(viewType){
+            case FAV:
+                View fav = layoutInflater .inflate(R.layout.fav_list_item,parent,false);
+                fav.setFocusable(true);
+                viewHolder = new FavoriteAdapterViewHolder(fav);
+                break;
+            case ALL:
+                View allMovies = layoutInflater.inflate(R.layout.card_view_list,parent,false);
+                allMovies.setFocusable(true);
+                viewHolder = new MovieAdapterViewHolder(allMovies,mMovieAdapterOnClickListener);
+                break;
+                }
+                return viewHolder;
+        }
+
 
     @Override
-    public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Movies movie = movies.get(position);
-        holder.voteAverage.setText(String.valueOf(movie.getVoteAverage()));
+        switch(holder.getItemViewType()) {
 
-         Picasso.with(context)
-                .load(movie.getPosterPath())
-                .into(holder.movieImage);
+            case ALL:
+                MovieAdapterViewHolder movieHolder = (MovieAdapterViewHolder)holder;
+                Movies movie = movies.get(position);
+                movieHolder.voteAverage.setText(String.valueOf(movie.getVoteAverage()));
+
+            Picasso.with(context)
+                    .load(movie.getPosterPath())
+                    .into(movieHolder.movieImage);
+            break;
+            case FAV:
+                FavoriteAdapterViewHolder favHolder = (FavoriteAdapterViewHolder)holder;
+                Movies favMovie = movies.get(position);
+                favHolder.titleView.setText(favMovie.getOriginalTitle());
+                favHolder.plotView.setText(favMovie.getOverView());
+                favHolder.dateView.setText(favMovie.getReleaseDate());
+                favHolder.rateView.setText(String.valueOf(favMovie.getVoteAverage()));
+
+                Picasso.with(context)
+                        .load(favMovie.getPosterPath())
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(favHolder.posterView);
+                break;
+
+        }
 
     }
 
-    public void updateRecyclerData(List<Movies> newMovies) {
+    public void updateRecyclerData(List<Movies> newMovies,boolean isFav) {
         this.movies = newMovies;
+        FLAG_IS_FAV = isFav;
         notifyDataSetChanged();
 
     }
@@ -89,6 +139,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             int clickedPosition = getAdapterPosition();
             mMovieAdapterListener.onItemClick(clickedPosition);
 
+        }
+    }
+
+    public class FavoriteAdapterViewHolder extends RecyclerView.ViewHolder{
+
+        ImageView posterView;
+        TextView rateView;
+        TextView dateView;
+        TextView plotView;
+        TextView titleView;
+
+        public FavoriteAdapterViewHolder(View itemView) {
+            super(itemView);
+            posterView = itemView.findViewById(R.id.imageViewPoster);
+            rateView = itemView.findViewById(R.id.textViewRating);
+            dateView = itemView.findViewById(R.id.textViewDate);
+            plotView = itemView.findViewById(R.id.textViewOverview);
+            titleView = itemView.findViewById(R.id.textViewTitle);
         }
     }
 }
