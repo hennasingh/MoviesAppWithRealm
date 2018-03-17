@@ -12,7 +12,7 @@ public class MovieListDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME ="movies.db";
 
-    private static final int DATABASE_VERSION =2;
+    private static final int DATABASE_VERSION =4;
 
     public MovieListDbHelper(Context context){
         super(context, DATABASE_NAME,null,DATABASE_VERSION); // null -> cursor factory
@@ -23,7 +23,7 @@ public class MovieListDbHelper extends SQLiteOpenHelper {
         final String CREATE_MOVIELIST_TABLE = "CREATE TABLE " +
                 MovieListContract.MovieListEntry.TABLE_NAME + " (" +
                 MovieListContract.MovieListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MovieListContract.MovieListEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL," +
+                MovieListContract.MovieListEntry.COLUMN_MOVIE_ID + " INTEGER UNIQUE NOT NULL," +
                 MovieListContract.MovieListEntry.COLUMN_MOVIE_NAME + " TEXT NOT NULL," +
                 MovieListContract.MovieListEntry.COLUMN_MOVIE_DATE + " TEXT," +
                 MovieListContract.MovieListEntry.COLUMN_MOVIE_RATING + " REAL," +
