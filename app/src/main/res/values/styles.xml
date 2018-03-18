@@ -33,7 +33,7 @@
     </style>
 
     <style name="Text_Heading_Style">
-        <item name="android:background">@drawable/text_background</item>
+
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
@@ -42,7 +42,8 @@
         <item name="android:layout_marginEnd">@dimen/margin_10dp</item>
         <item name="android:layout_marginTop">@dimen/margin_16dp</item>
         <item name="android:padding">@dimen/padding_4dp</item>
-        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
 
     </style>
 
@@ -54,9 +55,9 @@
         <item name="android:drawablePadding">@dimen/padding_4dp</item>
         <item name="android:textSize">@dimen/text_16sp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/text_background</item>
-        <item name="android:padding">@dimen/padding_2dp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/padding_2dp</item>
+
 
     </style>
 

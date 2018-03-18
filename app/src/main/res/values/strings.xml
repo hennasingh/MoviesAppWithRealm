@@ -37,4 +37,6 @@
     <string name="reviews_label">Reviews</string>
     <string name="share_icon_description">Share Video Icon</string>
     <string name="author_label">Author:</string>
+    <string name="no_reviews_label">No Reviews Found</string>
+    <string name="no_videos_label">No Videos Found</string>
 </resources>

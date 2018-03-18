@@ -3,7 +3,6 @@ package com.artist.web.popularmovies.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +42,14 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewAd
     public void onBindViewHolder(ReviewAdapterViewHolder holder, int position) {
 
         final MovieReviews review = mMovieReviews.get(position);
+        if(review==null){
+            holder.mTextViewContent.setText(R.string.no_reviews_label);
+            return;
+        }
         holder.mTextViewAuthor.setText(review.getAuthor());
         holder.mTextViewContent.setText(review.getContent());
 
-        holder.mCardViewReviews.setOnClickListener(new View.OnClickListener() {
+        holder.mTextReadMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -91,13 +94,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewAd
 
         TextView mTextViewAuthor;
         TextView mTextViewContent;
-        CardView mCardViewReviews;
+        TextView mTextReadMore;
 
          ReviewAdapterViewHolder(View itemView) {
             super(itemView);
             mTextViewAuthor = itemView.findViewById(R.id.textViewAuthor);
             mTextViewContent = itemView.findViewById(R.id.textViewContent);
-            mCardViewReviews = itemView.findViewById(R.id.cardViewReviews);
+            mTextReadMore = itemView.findViewById(R.id.readMore);
         }
     }
 }

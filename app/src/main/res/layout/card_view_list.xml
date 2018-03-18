@@ -22,15 +22,14 @@
 
     <TextView
         android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:padding="@dimen/padding_4dp"
-        android:layout_alignBottom="@+id/movie_ImageView"
+        android:layout_below="@+id/movie_ImageView"
         tools:text="6.4"
         android:textSize="@dimen/text_22sp"
         android:textColor="@color/white"
         android:background="@drawable/text_border"
-        android:layout_marginBottom="@dimen/margin_2dp"
         android:drawableStart="@drawable/star"
         android:drawablePadding="@dimen/padding_4dp"/>
     </RelativeLayout>

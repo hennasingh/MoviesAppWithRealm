@@ -46,6 +46,13 @@
         app:srcCompat="@drawable/ic_share"
         android:layout_alignParentEnd="true"/>
 
+    <TextView
+        android:id="@+id/noVideos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/text_16sp"/>
+
 
 </RelativeLayout>
 

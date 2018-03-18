@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.artist.web.popularmovies.NetworkUtils;
 import com.artist.web.popularmovies.R;
@@ -23,10 +24,9 @@ import java.util.List;
  * Created by User on 10-Mar-18.
  */
 
-public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoAdapterViewHolder>
-         {
+public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoAdapterViewHolder>{
 
-            YouTubeThumbnailLoader mLoader;
+
     private List<MovieVideos> mMovieVideos;
     private Context context;
 
@@ -47,6 +47,11 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoAdapt
     public void onBindViewHolder(VideoAdapterViewHolder holder, int position) {
 
         final MovieVideos video = mMovieVideos.get(position);
+
+        if(video==null){
+            holder.noVideos.setText(R.string.no_videos_label);
+            return;
+        }
 
 
         holder.mThumbnailView.initialize(NetworkUtils.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
@@ -115,12 +120,14 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoAdapt
         ImageView mShareImageView;
         ImageView mPlayImageView;
         YouTubeThumbnailView mThumbnailView;
+        TextView noVideos;
 
         public VideoAdapterViewHolder(View itemView) {
             super(itemView);
             mShareImageView = itemView.findViewById(R.id.imageViewShare);
             mPlayImageView = itemView.findViewById(R.id.youTubePlay);
             mThumbnailView = itemView.findViewById(R.id.videoThumbnailView);
+            noVideos = itemView.findViewById(R.id.noVideos);
         }
 
      }

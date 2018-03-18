@@ -2,7 +2,11 @@ package com.artist.web.popularmovies.activity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +23,7 @@ import com.artist.web.popularmovies.adapter.ReviewsAdapter;
 import com.artist.web.popularmovies.adapter.VideosAdapter;
 import com.artist.web.popularmovies.database.Favorites;
 import com.artist.web.popularmovies.database.MovieListContract;
+import com.artist.web.popularmovies.model.ColorsPalette;
 import com.artist.web.popularmovies.model.Genres;
 import com.artist.web.popularmovies.model.MovieDetails;
 import com.artist.web.popularmovies.model.MovieIdReviews;
@@ -55,6 +60,10 @@ public class DetailMovieActivity extends BaseActivity {
     int mMovieId;
     private ImageButton favButton;
 
+    private TextView mTrailerLabel;
+    private TextView mReviewLabel;
+    private ConstraintLayout mDetailLayout;
+
     private static final int FAV_TAG=0;
     private static final int FAV_NOT_TAG =1;
 
@@ -90,8 +99,10 @@ public class DetailMovieActivity extends BaseActivity {
         mMovieGenre = findViewById(R.id.movie_genre);
         favButton = findViewById(R.id.fav_button);
 
+        mTrailerLabel = findViewById(R.id.trailer_label);
+        mReviewLabel = findViewById(R.id.reviews_label);
 
-
+        mDetailLayout = findViewById(R.id.constraint_layout_detail);
 
         mMovie = getIntent().getParcelableExtra(PARCEL_DATA);
 
@@ -199,12 +210,36 @@ public class DetailMovieActivity extends BaseActivity {
         mOverview.setText(mMovie.getOverView());
 
         Picasso.with(this)
-                .load(String.format(NetworkUtils.BASE_BACKDROP_URL,mMovie.getBackdropPath()))
-                .into(mImageHeader);
+                .load(String.format(NetworkUtils.BASE_POSTER_URL,mMovie.getPosterPath()))
+                .into(mImagePoster, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap bitmap = ((BitmapDrawable)mImagePoster.getDrawable()).getBitmap();
+                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                            @Override
+                            public void onGenerated(Palette palette) {
+                                Palette.Swatch colorSwatch = ColorsPalette.getMostPopulousSwatch(palette);
+
+                                mDetailLayout.setBackgroundColor(colorSwatch.getRgb());
+                                mMovieHeading.setTextColor(colorSwatch.getBodyTextColor());
+                                mMovieGenre.setTextColor(colorSwatch.getTitleTextColor());
+                                mTrailerLabel.setTextColor(colorSwatch.getBodyTextColor());
+                                mReviewLabel.setTextColor(colorSwatch.getBodyTextColor());
+                                mOverview.setTextColor(colorSwatch.getTitleTextColor());
+
+                              }
+                        });
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
         Picasso.with(this)
-                .load(String.format(NetworkUtils.BASE_POSTER_URL,mMovie.getPosterPath()))
-                .into(mImagePoster);
+                .load(String.format(NetworkUtils.BASE_BACKDROP_URL,mMovie.getBackdropPath()))
+                .into(mImageHeader);
     }
 
     public void onClickAddMovie(View view) {

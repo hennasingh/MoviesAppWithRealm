@@ -1,6 +1,9 @@
 package com.artist.web.popularmovies.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.artist.web.popularmovies.NetworkUtils;
 import com.artist.web.popularmovies.R;
+import com.artist.web.popularmovies.model.ColorsPalette;
 import com.artist.web.popularmovies.model.Movies;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
@@ -83,7 +87,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch(holder.getItemViewType()) {
 
             case ALL:
-                MovieAdapterViewHolder movieHolder = (MovieAdapterViewHolder)holder;
+                final MovieAdapterViewHolder movieHolder = (MovieAdapterViewHolder)holder;
                 Movies movie = movies.get(position);
                 movieHolder.voteAverage.setText(String.valueOf(movie.getVoteAverage()));
 
@@ -91,7 +95,25 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .load(String.format(NetworkUtils.BASE_POSTER_URL,movie.getPosterPath()))
                     .fit()
                     .error(R.drawable.no_internet)
-                    .into(movieHolder.movieImage);
+                    .into(movieHolder.movieImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap = ((BitmapDrawable)movieHolder.movieImage.getDrawable()).getBitmap();
+                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    Palette.Swatch colorSwatch = ColorsPalette.getMostPopulousSwatch(palette);
+                                    movieHolder.voteAverage.setBackgroundColor(colorSwatch.getRgb());
+                                    movieHolder.voteAverage.setTextColor(colorSwatch.getBodyTextColor());
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
             break;
             case FAV:
                 final FavoriteAdapterViewHolder favHolder = (FavoriteAdapterViewHolder)holder;
