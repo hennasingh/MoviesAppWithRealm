@@ -199,11 +199,11 @@ public class DetailMovieActivity extends BaseActivity {
         mOverview.setText(mMovie.getOverView());
 
         Picasso.with(this)
-                .load(String.format("https://image.tmdb.org/t/p/w780%s",mMovie.getBackdropPath()))
+                .load(String.format(NetworkUtils.BASE_BACKDROP_URL,mMovie.getBackdropPath()))
                 .into(mImageHeader);
 
         Picasso.with(this)
-                .load(String.format("https://image.tmdb.org/t/p/w342%s",mMovie.getPosterPath()))
+                .load(String.format(NetworkUtils.BASE_POSTER_URL,mMovie.getPosterPath()))
                 .into(mImagePoster);
     }
 

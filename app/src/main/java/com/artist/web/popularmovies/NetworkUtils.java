@@ -15,6 +15,9 @@ public class NetworkUtils {
     public static final String APPEND_VALUES = "videos,reviews";
     public static final String YOUTUBE_API_KEY = "";
 
+    public static final String BASE_POSTER_URL = "https://image.tmdb.org/t/p/w342%s";
+    public static final String BASE_BACKDROP_URL = "https://image.tmdb.org/t/p/w780%s";
+
 
     public static boolean checkConnectivity(Context context) {
         ConnectivityManager connectivityManager =

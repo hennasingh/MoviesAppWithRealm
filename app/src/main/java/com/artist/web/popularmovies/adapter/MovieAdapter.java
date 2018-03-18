@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.artist.web.popularmovies.NetworkUtils;
 import com.artist.web.popularmovies.R;
 import com.artist.web.popularmovies.model.Movies;
 import com.squareup.picasso.Callback;
@@ -87,7 +88,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 movieHolder.voteAverage.setText(String.valueOf(movie.getVoteAverage()));
 
             Picasso.with(context)
-                    .load(String.format("https://image.tmdb.org/t/p/w342%s",movie.getPosterPath()))
+                    .load(String.format(NetworkUtils.BASE_POSTER_URL,movie.getPosterPath()))
                     .fit()
                     .error(R.drawable.no_internet)
                     .into(movieHolder.movieImage);
@@ -139,6 +140,9 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
+        if(movies==null){
+            return 0;
+        }
         return movies.size();
     }
 

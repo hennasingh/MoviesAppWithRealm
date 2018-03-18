@@ -283,6 +283,9 @@ public class MainActivity extends BaseActivity
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+        loadingBar.setVisibility(View.INVISIBLE);
+        showMessage.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
