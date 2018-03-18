@@ -2,6 +2,7 @@ package com.artist.web.popularmovies.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.artist.web.popularmovies.R;
 import com.artist.web.popularmovies.model.Movies;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -85,21 +87,43 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 movieHolder.voteAverage.setText(String.valueOf(movie.getVoteAverage()));
 
             Picasso.with(context)
-                    .load(movie.getPosterPath())
+                    .load(String.format("https://image.tmdb.org/t/p/w342%s",movie.getPosterPath()))
+                    .fit()
+                    .error(R.drawable.no_internet)
                     .into(movieHolder.movieImage);
             break;
             case FAV:
-                FavoriteAdapterViewHolder favHolder = (FavoriteAdapterViewHolder)holder;
-                Movies favMovie = movies.get(position);
+                final FavoriteAdapterViewHolder favHolder = (FavoriteAdapterViewHolder)holder;
+                final Movies favMovie = movies.get(position);
                 favHolder.titleView.setText(favMovie.getOriginalTitle());
                 favHolder.plotView.setText(favMovie.getOverView());
                 favHolder.dateView.setText(favMovie.getReleaseDate());
                 favHolder.rateView.setText(String.valueOf(favMovie.getVoteAverage()));
 
+                Log.d("Picture url ", favMovie.getPosterPath());
+
                 Picasso.with(context)
                         .load(favMovie.getPosterPath())
                         .networkPolicy(NetworkPolicy.OFFLINE)
-                        .into(favHolder.posterView);
+                        .error(R.drawable.no_internet)
+                        .fit()
+                        .into(favHolder.posterView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError() {
+                               //Try again online if cache failed
+                                Picasso.with(context)
+                                        .load( favMovie.getPosterPath())
+                                        .error(R.drawable.no_internet)
+                                        .fit()
+                                        .into(favHolder.posterView);
+                            }
+                        });
+
                 break;
 
         }

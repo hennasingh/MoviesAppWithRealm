@@ -150,7 +150,11 @@ public class MainActivity extends BaseActivity
             showErrorMessage(" Please enter a valid API KEY");
             return;
         }
-        try {
+
+        if(!NetworkUtils.checkConnectivity(context)){
+            showErrorMessage("No Internet Connection");
+            return;
+        }
 
             if (preference.equals("top_rated")) {
                 mToolbar.setTitle("Top Rated Movies");
@@ -199,11 +203,6 @@ public class MainActivity extends BaseActivity
                     showErrorMessage("HTTP Call got failed " + t.getMessage());
                 }
             });
-        } catch (Exception e) {
-
-            Log.e(TAG, "No Internet Connection " + e.getMessage());
-            showErrorMessage("No Internet Connection");
-        }
 
     }
 
@@ -318,5 +317,10 @@ public class MainActivity extends BaseActivity
 
     }
 
- }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportLoaderManager().destroyLoader(FAV_MOVIE_LOADER);
+    }
+}
 

@@ -84,7 +84,7 @@ public class MoviesContentProvider extends ContentProvider {
                 //URI: content://<authority>tasks/#
                 String id = uri.getPathSegments().get(1);
                 // Selection is the _ID column = ?, and the Selection args = the row ID from the URI
-                String mSelection = "_id=?";
+                String mSelection = MovieListContract.MovieListEntry.COLUMN_MOVIE_ID + "=?";
                 String[] mSelectionArgs = new String[]{id};
 
                 returnCursor = databaseReadable.query(MovieListContract.MovieListEntry.TABLE_NAME,
@@ -148,7 +148,7 @@ public class MoviesContentProvider extends ContentProvider {
                 //URI: content://<authority>tasks/#
                 String id = uri.getPathSegments().get(1);
                 // Selection is the _ID column = ?, and the Selection args = the row ID from the URI
-                String mSelection = "_id=?";
+                String mSelection = MovieListContract.MovieListEntry.COLUMN_MOVIE_ID +" =?";
                 String[] mSelectionArgs = new String[]{id};
                 rowDeleted = databaseWritable.delete(MovieListContract.MovieListEntry.TABLE_NAME,
                         mSelection,

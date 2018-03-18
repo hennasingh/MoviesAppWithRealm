@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PopularMovies2_Project3.iml" filepath="$PROJECT_DIR$/PopularMovies2_Project3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Movies_Stage2-master.iml" filepath="$PROJECT_DIR$/Movies_Stage2-master.iml" />
+      <module fileurl="file://C:\Android Project Videos\Udacity-Exercises\movies2-oldcommit\Movies_Stage2-master\PopularMovies2_Project3.iml" filepath="C:\Android Project Videos\Udacity-Exercises\movies2-oldcommit\Movies_Stage2-master\PopularMovies2_Project3.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

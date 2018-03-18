@@ -128,7 +128,7 @@ public class DetailMovieActivity extends BaseActivity {
 
     private void makeNetworkRequest(int MovieId) {
 
-        try{
+          try{
             MainApplication.sApiClient.getMovieDetails(MovieId, NetworkUtils.API_KEY,
                     NetworkUtils.APPEND_VALUES, new Callback<MovieDetails>() {
                         @Override
@@ -199,11 +199,11 @@ public class DetailMovieActivity extends BaseActivity {
         mOverview.setText(mMovie.getOverView());
 
         Picasso.with(this)
-                .load(mMovie.getBackdropPath())
+                .load(String.format("https://image.tmdb.org/t/p/w780%s",mMovie.getBackdropPath()))
                 .into(mImageHeader);
 
         Picasso.with(this)
-                .load(mMovie.getPosterPath())
+                .load(String.format("https://image.tmdb.org/t/p/w342%s",mMovie.getPosterPath()))
                 .into(mImagePoster);
     }
 
