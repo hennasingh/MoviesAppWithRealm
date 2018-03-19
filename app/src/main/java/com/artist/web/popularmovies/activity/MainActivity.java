@@ -103,6 +103,8 @@ public class MainActivity extends BaseActivity
                     mMovieAdapter.notifyDataSetChanged();
                 } else {
                     mMovieAdapter = new MovieAdapter(movieList, MainActivity.this, context, false);
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, setGridAttributes());
+                    mRecyclerView.setLayoutManager(layoutManager);
                     mRecyclerView.setAdapter(mMovieAdapter);
                     mRecyclerView.setHasFixedSize(true);
                 }
@@ -182,11 +184,9 @@ public class MainActivity extends BaseActivity
             } else if (preference.equals("latest")) {
                 mToolbar.setTitle("Latest Movies");
             }
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, setGridAttributes());
-
-            mRecyclerView.setLayoutManager(layoutManager);
             isFav = false;
-
+           RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, setGridAttributes());
+           mRecyclerView.setLayoutManager(layoutManager);
             MainApplication.sApiClient.getMovies(preference, NetworkUtils.API_KEY, new Callback<MovieResponse>() {
 
                 @Override
@@ -199,6 +199,7 @@ public class MainActivity extends BaseActivity
                         Log.d(TAG, "Number of Movies Received: " + movieList.size());
                         if (mMovieAdapter == null) {
                             mMovieAdapter = new MovieAdapter(movieList, MainActivity.this, context,false);
+
                             mRecyclerView.setAdapter(mMovieAdapter);
                             mRecyclerView.setHasFixedSize(true);
 
