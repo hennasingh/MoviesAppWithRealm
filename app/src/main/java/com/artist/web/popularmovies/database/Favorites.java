@@ -50,6 +50,7 @@ public class Favorites   {
         removeFavUri = removeFavUri.buildUpon().appendPath(stringId).build();
         context.getContentResolver().delete(removeFavUri,null,null);
 
+
       }
 
 

@@ -13,7 +13,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-      android:layout_margin="@dimen/margin_2dp">
+    android:background="@drawable/background_bar"
+    android:layout_margin="@dimen/margin_2dp">
 
       <ImageView
           android:id="@+id/imageViewPoster"
@@ -26,11 +27,13 @@
 
       <TextView
           android:id="@+id/textViewTitle"
-          android:layout_width="wrap_content"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           tools:text="Beauty and the Beast"
+          android:textColor="@color/white"
           app:layout_constraintLeft_toRightOf="@id/imageViewPoster"
           app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
           android:textSize="@dimen/text_18sp"
           android:layout_marginTop="@dimen/margin_10dp"
           android:layout_marginStart="@dimen/margin_8dp"
@@ -42,7 +45,8 @@
           android:drawableStart="@drawable/star"
           app:layout_constraintLeft_toRightOf="@id/imageViewPoster"
           app:layout_constraintTop_toTopOf="@id/textViewTitle"
-          android:layout_marginTop="34dp"
+          android:layout_marginTop="40dp"
+          android:textColor="@color/white"
           android:layout_marginStart="@dimen/margin_6dp"
           tools:text="8.4"
           android:drawablePadding="@dimen/padding_4dp"
@@ -55,11 +59,24 @@
           android:drawableStart="@drawable/ic_date"
           app:layout_constraintLeft_toRightOf="@id/textViewRating"
           app:layout_constraintTop_toTopOf="@id/textViewTitle"
-          android:layout_marginTop="34dp"
+          android:layout_marginTop="40dp"
           android:layout_marginStart="@dimen/margin_16dp"
           tools:text="March 24"
+          android:textColor="@color/white"
           android:drawablePadding="@dimen/padding_4dp"
           android:textSize="@dimen/text_18sp"/>
+
+      <ImageButton
+          android:id="@+id/removeFromFav"
+          app:srcCompat="@drawable/ic_favorite_filled"
+          android:layout_width="wrap_content"
+          android:layout_marginTop="@dimen/margin_4dp"
+          android:layout_marginStart="@dimen/margin_4dp"
+          app:layout_constraintStart_toStartOf="@+id/imageViewPoster"
+          app:layout_constraintTop_toTopOf="parent"
+          android:onClick="onClickRemove"
+          android:background="@android:color/transparent"
+          android:layout_height="wrap_content"/>
 
       <TextView
           android:id="@+id/textViewOverview"
@@ -68,6 +85,7 @@
           app:layout_constraintStart_toEndOf="@id/imageViewPoster"
           app:layout_constraintTop_toBottomOf="@id/textViewDate"
           app:layout_constraintRight_toRightOf="parent"
+          android:textColor="@color/white"
           android:layout_marginTop="@dimen/margin_10dp"
           android:layout_marginStart="@dimen/margin_8dp"
           android:lineSpacingMultiplier="1.3"

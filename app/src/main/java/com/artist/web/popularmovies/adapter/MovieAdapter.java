@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -90,9 +91,10 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 final MovieAdapterViewHolder movieHolder = (MovieAdapterViewHolder)holder;
                 Movies movie = movies.get(position);
                 movieHolder.voteAverage.setText(String.valueOf(movie.getVoteAverage()));
+                String posterUrl = String.format(NetworkUtils.BASE_POSTER_URL,movie.getPosterPath());
 
             Picasso.with(context)
-                    .load(String.format(NetworkUtils.BASE_POSTER_URL,movie.getPosterPath()))
+                    .load(posterUrl)
                     .fit()
                     .error(R.drawable.no_internet)
                     .into(movieHolder.movieImage, new Callback() {
@@ -122,11 +124,13 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 favHolder.plotView.setText(favMovie.getOverView());
                 favHolder.dateView.setText(favMovie.getReleaseDate());
                 favHolder.rateView.setText(String.valueOf(favMovie.getVoteAverage()));
+                favHolder.mRemoveFav.setTag(favMovie.getId());
 
                 Log.d("Picture url ", favMovie.getPosterPath());
+                String favPosterUrl = String.format(NetworkUtils.BASE_POSTER_URL,favMovie.getPosterPath());
 
                 Picasso.with(context)
-                        .load(favMovie.getPosterPath())
+                        .load(favPosterUrl)
                         .networkPolicy(NetworkPolicy.OFFLINE)
                         .error(R.drawable.no_internet)
                         .fit()
@@ -199,6 +203,8 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView dateView;
         TextView plotView;
         TextView titleView;
+        ImageButton mRemoveFav;
+
 
         public FavoriteAdapterViewHolder(View itemView) {
             super(itemView);
@@ -207,6 +213,8 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             dateView = itemView.findViewById(R.id.textViewDate);
             plotView = itemView.findViewById(R.id.textViewOverview);
             titleView = itemView.findViewById(R.id.textViewTitle);
+            mRemoveFav = itemView.findViewById(R.id.removeFromFav);
+
         }
     }
 }

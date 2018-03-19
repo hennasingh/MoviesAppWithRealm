@@ -57,7 +57,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewAd
                 alert.setTitle("Movie Review");
 
                 WebView webReview= new WebView(view.getContext());
-                webReview.getSettings().setJavaScriptEnabled(true);
+               // webReview.getSettings().setJavaScriptEnabled(true);
                 webReview.loadUrl(review.getUrl());
                 webReview.setWebViewClient(new WebViewClient(){
 

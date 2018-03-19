@@ -30,6 +30,7 @@ import com.artist.web.popularmovies.MainApplication;
 import com.artist.web.popularmovies.NetworkUtils;
 import com.artist.web.popularmovies.R;
 import com.artist.web.popularmovies.adapter.MovieAdapter;
+import com.artist.web.popularmovies.database.Favorites;
 import com.artist.web.popularmovies.database.MovieListContract;
 import com.artist.web.popularmovies.model.MovieResponse;
 import com.artist.web.popularmovies.model.Movies;
@@ -144,6 +145,11 @@ public class MainActivity extends BaseActivity
         startActivity(detailIntent);
     }
 
+    private void showViews(){
+        loadingBar.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        showMessage.setVisibility(View.INVISIBLE);
+    }
     private void displayMovies(final String preference) {
 
         if (TextUtils.isEmpty(NetworkUtils.API_KEY)) {
@@ -234,7 +240,7 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
+         switch (item.getItemId()) {
             case R.id.top_rated:
                 displayMovies("top_rated");
                 break;
@@ -324,6 +330,15 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
         getSupportLoaderManager().destroyLoader(FAV_MOVIE_LOADER);
+    }
+
+    public void onClickRemove(View view){
+
+        int movieId = (int)view.getTag();
+        Favorites.removeMovieFromFavorite(context,movieId);
+        getSupportLoaderManager().restartLoader(FAV_MOVIE_LOADER,null,this);
+
+
     }
 }
 

@@ -209,8 +209,10 @@ public class DetailMovieActivity extends BaseActivity {
         mMovieDate.setText(mMovie.getReleaseDate());
         mOverview.setText(mMovie.getOverView());
 
+        String posterUrl = String.format(NetworkUtils.BASE_POSTER_URL,mMovie.getPosterPath());
+
         Picasso.with(this)
-                .load(String.format(NetworkUtils.BASE_POSTER_URL,mMovie.getPosterPath()))
+                .load(posterUrl)
                 .into(mImagePoster, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
@@ -237,8 +239,9 @@ public class DetailMovieActivity extends BaseActivity {
                     }
                 });
 
+        String backdropUrl = String.format(NetworkUtils.BASE_BACKDROP_URL,mMovie.getBackdropPath());
         Picasso.with(this)
-                .load(String.format(NetworkUtils.BASE_BACKDROP_URL,mMovie.getBackdropPath()))
+                .load(backdropUrl)
                 .into(mImageHeader);
     }
 
