@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity
     private TextView showMessage;
 
     private static final int FAV_MOVIE_LOADER = 101;
+    private static boolean isFav;
+    private static final String FAVORITE = "favorite";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +91,21 @@ public class MainActivity extends BaseActivity
 
          if (savedInstanceState != null) {
 
+             showViews();
             movieList = savedInstanceState.getParcelableArrayList(STATE_MOVIES);
-            if (mMovieAdapter != null) {
-                mMovieAdapter.updateRecyclerData(movieList,false);
-                mMovieAdapter.notifyDataSetChanged();
-            } else {
-                mMovieAdapter = new MovieAdapter(movieList, MainActivity.this, context,false);
-                mRecyclerView.setAdapter(mMovieAdapter);
-                mRecyclerView.setHasFixedSize(true);
+            isFav = savedInstanceState.getBoolean(FAVORITE);
+            if(isFav){
+                mToolbar.setTitle(R.string.fav_movies_title);
+                getSupportLoaderManager().restartLoader(FAV_MOVIE_LOADER,null,this);
+            }else {
+                if (mMovieAdapter != null) {
+                    mMovieAdapter.updateRecyclerData(movieList, false);
+                    mMovieAdapter.notifyDataSetChanged();
+                } else {
+                    mMovieAdapter = new MovieAdapter(movieList, MainActivity.this, context, false);
+                    mRecyclerView.setAdapter(mMovieAdapter);
+                    mRecyclerView.setHasFixedSize(true);
+                }
             }
 
         } else {
@@ -176,6 +185,7 @@ public class MainActivity extends BaseActivity
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, setGridAttributes());
 
             mRecyclerView.setLayoutManager(layoutManager);
+            isFav = false;
 
             MainApplication.sApiClient.getMovies(preference, NetworkUtils.API_KEY, new Callback<MovieResponse>() {
 
@@ -254,6 +264,7 @@ public class MainActivity extends BaseActivity
                 displayMovies("upcoming");
                 break;
             case R.id.fav_movies:
+                isFav = true;
                 mToolbar.setTitle("Favorite Movies");
                 getSupportLoaderManager().initLoader(FAV_MOVIE_LOADER,null,this);
         }
@@ -265,6 +276,7 @@ public class MainActivity extends BaseActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STATE_MOVIES, movieList);
+        outState.putBoolean(FAVORITE,isFav);
     }
 
     @Override
@@ -289,9 +301,7 @@ public class MainActivity extends BaseActivity
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        loadingBar.setVisibility(View.INVISIBLE);
-        showMessage.setVisibility(View.INVISIBLE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        showViews();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
@@ -306,13 +316,14 @@ public class MainActivity extends BaseActivity
         data.moveToFirst();
 
         do{
+            int movieId = data.getInt(data.getColumnIndex(MovieListContract.MovieListEntry.COLUMN_MOVIE_ID));
             String movieName = data.getString(data.getColumnIndex(MovieListContract.MovieListEntry.COLUMN_MOVIE_NAME));
             String moviePlot = data.getString(data.getColumnIndex(MovieListContract.MovieListEntry.COLUMN_MOVIE_PLOT));
             double movieRating = data.getDouble(data.getColumnIndex(MovieListContract.MovieListEntry.COLUMN_MOVIE_RATING));
             String moviePoster = data.getString(data.getColumnIndex(MovieListContract.MovieListEntry.COLUMN_MOVIE_POSTER));
             String movieDate = data.getString(data.getColumnIndex(MovieListContract.MovieListEntry.COLUMN_MOVIE_DATE));
 
-            mMovie.add(new Movies(movieName, movieRating, moviePlot, movieDate, moviePoster));
+            mMovie.add(new Movies(movieId,movieName, movieRating, moviePlot, movieDate, moviePoster));
         }while(data.moveToNext());
 
             mMovieAdapter= new MovieAdapter(mMovie,this, this,true);
@@ -329,7 +340,12 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        getSupportLoaderManager().destroyLoader(FAV_MOVIE_LOADER);
+        if(isFav) {
+            mToolbar.setTitle(getString(R.string.fav_movies_title));
+        }else{
+            getSupportLoaderManager().destroyLoader(FAV_MOVIE_LOADER);
+        }
+
     }
 
     public void onClickRemove(View view){

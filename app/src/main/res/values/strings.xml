@@ -39,4 +39,5 @@
     <string name="author_label">Author:</string>
     <string name="no_reviews_label">No Reviews Found</string>
     <string name="no_videos_label">No Videos Found</string>
+    <string name="fav_movies_title">Favorite Movies</string>
 </resources>

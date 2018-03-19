@@ -126,6 +126,10 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 favHolder.rateView.setText(String.valueOf(favMovie.getVoteAverage()));
                 favHolder.mRemoveFav.setTag(favMovie.getId());
 
+                Log.d("setting Tag ID ","=" + favMovie.getId());
+
+                Log.d("setting Tag " ,"="+ favHolder.mRemoveFav.getTag());
+
                 Log.d("Picture url ", favMovie.getPosterPath());
                 String favPosterUrl = String.format(NetworkUtils.BASE_POSTER_URL,favMovie.getPosterPath());
 
