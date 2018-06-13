@@ -1,7 +1,31 @@
-# Movies_Stage2
-This is project 3 of Android Developer Nanodegree
+# Popular Movies Stage 2
+
+This is project 3rd of Android Developer Nanodegree by Udacity 
+
+- Popular, Top-Rated, Upcoming or favorites Movies are displayed in a grid view.
+- Detail page is displayed with poster, title, rating, release date, overview and more.
+- Detail page has a favorite button to add movie to or remove movie from favorites collection.
+- Detail page has trailers and reviews displayed, You Tube API is used to display trailer thumbnails.
+- Settings menu has an option for changing themes.
+
+### Configuration 
+In order to run this project, you need to get an API key from [TMDb](https://developers.themoviedb.org/3/discover/movie-discover) and You Tube API key from [Data API](https://developers.google.com/youtube/v3/getting-started)
+
 Add keys in NetworkUtils.java file
 
+#### Sample Video
+![movie gif](/assets/movie_stage2.gif)
+
+### What Project Uses
+
+- [Retrofit](https://github.com/square/retrofit)
+- [Picasso](https://github.com/square/picasso)
+- [Color Palette](https://developer.android.com/training/material/palette-colors)
+- [Recycler View](https://developer.android.com/guide/topics/ui/layout/recyclerview)
+- [Card View](https://developer.android.com/guide/topics/ui/layout/cardview)
+
+
+### License
 
 This project submitted by Henna Singh is a part of the Nanodegree At Udacity.
 
@@ -16,7 +40,7 @@ Copyright (c) 2018 Henna Singh
 
 Besides the above notice, the following license applies and this license notice
 must be included in all works derived from this project.
-
+```
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,3 +60,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
