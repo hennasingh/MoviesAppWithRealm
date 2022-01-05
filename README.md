@@ -1,6 +1,6 @@
-# Popular Movies Stage 2
+# Popular Movies 
 
-This is project 3rd of Android Developer Nanodegree by Udacity 
+Refactoring project 3rd of Android Developer Nanodegree by Udacity to use Realm Local Database 
 
 - Popular, Top-Rated, Upcoming or favorites Movies are displayed in a grid view.
 - Detail page is displayed with poster, title, rating, release date, overview and more.
